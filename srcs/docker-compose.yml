@@ -1,20 +1,27 @@
 version: "3.0"
 
 services:
-        #nginx:
-                # build:
-                        #context: .
-                        #dockerfile: ./requeriments/nginx/Dockerfile
-                        #  ports:
-                        # - "443:443"
-                          #                hostname: nginx
-
-        wordpress:
+        nginx:
                 build:
                         context: .
-                        dockerfile: ./requeriments/wordpress/Dockerfile
-                environment:
-                        DB_NAME: ${DB_NAME}
-                        DB_USER: ${DB_USER}
-                        DB_PASSWORD: ${DB_PASSWORD}
-                hostname: wordpress
+                        dockerfile: ./requeriments/nginx/Dockerfile
+                ports:
+                     - "443:443"
+                hostname: nginx
+
+        wordpress:
+                 build:
+                        context: ./requeriments/wordpress/
+                        args:
+                            - DB_NAME
+                            - DB_USER
+                            - DB_PASSWORD
+services:
+        mariadb:
+                build:
+                        context: ./requeriments/mariadb/
+                        args:
+                            - MYSQL_USER
+                            - MYSQL_ROOT_PASSWORD
+                            - MYSQL_PASSWORD
+
