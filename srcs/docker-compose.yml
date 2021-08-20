@@ -16,7 +16,6 @@ services:
                             - DB_NAME
                             - DB_USER
                             - DB_PASSWORD
-services:
         mariadb:
                 build:
                         context: ./requeriments/mariadb/
@@ -24,4 +23,8 @@ services:
                             - MYSQL_USER
                             - MYSQL_ROOT_PASSWORD
                             - MYSQL_PASSWORD
+                            - MYSQL_DATABASE
+                ports:
+                     - "3306"
+                hostname: mariadb
 
