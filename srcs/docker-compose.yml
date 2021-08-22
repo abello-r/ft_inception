@@ -16,6 +16,9 @@ services:
                             - DB_NAME
                             - DB_USER
                             - DB_PASSWORD
+                 volumes:
+                        - wp_vol:/var/www/html/wordpress
+ 
         mariadb:
                 build:
                         context: ./requeriments/mariadb/
@@ -24,7 +27,24 @@ services:
                             - MYSQL_ROOT_PASSWORD
                             - MYSQL_PASSWORD
                             - MYSQL_DATABASE
+                volumes:
+                      - db_vol:/var/lib/mysql
+
                 ports:
-                     - "3306"
-                hostname: mariadb
+                     - "3306:3306"
+
+volumes:
+        wp_vol:
+                driver: local
+                driver_opts:
+                        o: bind
+                        type: none
+                        device: /home/$USER/data/wp_vol
+        db_vol:
+                driver: local
+                driver_opts:
+                        o: bind
+                        type: none
+                        device: /home/$USER/data/db_vol
+
 
