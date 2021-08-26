@@ -22,7 +22,7 @@ EOF
 # Crear database de wordpress
 mysql < tools/init.sql
 
-#mysql -u root --password=$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < tools/wordpressdb.sql
+mysql -u root --password=$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < tools/wordpressdb.sql
 
 mysql_secure_installation <<EOF
 $MYSQL_ROOT_PASSWORD

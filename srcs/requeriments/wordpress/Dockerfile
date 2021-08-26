@@ -22,7 +22,7 @@ RUN	chmod 777 /var/www/html/wordpress/init_env.sh && \
 
 # Install all dependencies
 RUN	apk update && \
-	apk add php7 php7-fpm php7-opcache && \
+	apk add php7 php7-fpm php7-opcache php-mysqli php php-phar php-curl php-dom php-exif php-fileinfo php-json php-mbstring php-sodium php-openssl php-xml php-zip && \
 	apk add wget && \
 	apk add vim && \
 	apk add --no-cache tar && \
@@ -37,6 +37,14 @@ RUN	wget https://es.wordpress.org/latest-es_ES.tar.gz && \
 # Remove wordpress package
 RUN	rm -rf latest-es_ES.tar.gz
 
+RUN echo "listen = 9000" >> /etc/php7/php-fpm.d/www.conf
+
+# Listening
+EXPOSE 9000
+
 # Php-fpm service start
-CMD	rc-update add php-fpm7 default
+
+#CMD	rc-update add php-fpm7 default
+
+CMD ["/usr/sbin/php-fpm7", "--nodaemonize"]
 

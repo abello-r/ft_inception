@@ -1,24 +1,6 @@
 version: "3.0"
 
 services:
-        nginx:
-                build:
-                        context: .
-                        dockerfile: ./requeriments/nginx/Dockerfile
-                ports:
-                     - "443:443"
-                hostname: nginx
-
-        wordpress:
-                 build:
-                        context: ./requeriments/wordpress/
-                        args:
-                            - DB_NAME
-                            - DB_USER
-                            - DB_PASSWORD
-                 volumes:
-                        - wp_vol:/var/www/html/wordpress
- 
         mariadb:
                 build:
                         context: ./requeriments/mariadb/
@@ -29,9 +11,45 @@ services:
                             - MYSQL_DATABASE
                 volumes:
                       - db_vol:/var/lib/mysql
-
+                restart: always
+                expose:
+                     - "3306"
+                networks:
+                        - honeycomb
+                hostname: mariadb
+         
+        wordpress:
+                 build:
+                        context: ./requeriments/wordpress/
+                        args:
+                            - DB_NAME
+                            - DB_USER
+                            - DB_PASSWORD
+                 volumes:
+                        - wp_vol:/var/www/html/wordpress
+                 restart: always
+                 expose:
+                         - "9000"
+                 networks:
+                         - honeycomb
+                 hostname: wordpress
+                 depends_on:
+                         - mariadb
+        
+        nginx:
+                build:
+                        context: .
+                        dockerfile: ./requeriments/nginx/Dockerfile
+                restart: always
                 ports:
-                     - "3306:3306"
+                     - "443:443"
+                networks:
+                        - honeycomb
+                hostname: nginx
+                depends_on:
+                        - wordpress
+                volumes:
+                        - wp_vol:/var/www/html/wordpress
 
 volumes:
         wp_vol:
@@ -47,4 +65,5 @@ volumes:
                         type: none
                         device: /home/$USER/data/db_vol
 
-
+networks:
+        honeycomb:
