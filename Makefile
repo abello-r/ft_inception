@@ -50,12 +50,15 @@ help:
 	@echo "\n${B}DESCRIPTION\n"
 	@echo "${B}\tMakefile is a program to automate docker options using short commands.\n"
 	@echo "${B}1- make run:${GREEN}${B} Init all services, containers, images and volumes."
-	@echo "${NC}${B}2- make clean:${GREEN}${B} Stops and removes the containers with their images."
-	@echo "${NC}${B}3- make fclean:${GREEN}${B} Performs the same task as clean command, and now removes volumes."
-	@echo "${NC}${B}4- make re:${GREEN}${B} Clean and execute all.\n"
+	@echo "${NC}${B}2- make build:${GREEN}${B} Build a new container with old volumes."
+	@echo "${NC}${B}3- make clean:${GREEN}${B} Stops and removes the containers with their images."
+	@echo "${NC}${B}4- make fclean:${GREEN}${B} Performs the same task as clean command, and now removes volumes."
+	@echo "${NC}${B}5- make re:${GREEN}${B} Clean and execute all.\n"
 
 run:
 	@cd /home/${USER}/ ; mkdir data ; cd data ; mkdir db_vol wp_vol
 	@cd /home/${USER}/data ; chmod 777 db_vol wp_vol
 	@cd /home/${USER}/ft_inception/srcs ; docker-compose up -d
 
+build:
+	@cd /home/${USER}/ft_inception/srcs ; docker-compose up -d
