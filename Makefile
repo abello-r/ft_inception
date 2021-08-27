@@ -23,7 +23,7 @@ clean:
 	@echo "${B}| ${NOC}  | ${FC}      | ${FC}  |"
 	@echo "${B}|         |            |        |"
 	@echo "${B}|_______________________________|\n"
-	@bash /home/${USER}/reset.sh 2>/dev/null
+	@bash /home/${USER}/ft_inception/scripts/reset.sh 2>/dev/null
 
 fclean:
 	clear
@@ -35,9 +35,9 @@ fclean:
 	@echo "${B}|         |            |        |"
 	@echo "${B}|_______________________________|\n"
 	@echo "\n${BLUE}${B}Loading...${NC}\n"
-	@bash /home/${USER}/reset.sh 2>/dev/null
+	@bash /home/${USER}/ft_inception/scripts/reset.sh 2>/dev/null
 	@docker volume prune -f 2>/dev/null
-	@bash /home/${USER}/rm_vol.sh
+	@bash /home/${USER}/ft_inception/scripts/rm_vol.sh
 	@sudo rm -rf /home/${USER}/data
 	@echo "\n"
 
@@ -57,5 +57,5 @@ help:
 run:
 	@cd /home/${USER}/ ; mkdir data ; cd data ; mkdir db_vol wp_vol
 	@cd /home/${USER}/data ; chmod 777 db_vol wp_vol
-	@cd /home/${USER}/Inception/srcs ; docker-compose up -d
+	@cd /home/${USER}/ft_inception/srcs ; docker-compose up -d
 
